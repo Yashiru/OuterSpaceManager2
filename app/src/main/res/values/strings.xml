@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Inscription</string>
+    <string name="app_name">Outer Space Manager</string>
+    <string name="title_activity_building">BuildingActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>
