@@ -25,5 +25,13 @@ public class UserConnected {
     public String getPoints(){
         return String.valueOf(this.points);
     }
+
+    public String getMinerals(){
+        return String.valueOf(Math.round(this.minerals));
+    }
+
+    public String getGas(){
+        return String.valueOf(Math.round(this.gas));
+    }
 }
 

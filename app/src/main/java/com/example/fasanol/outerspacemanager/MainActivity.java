@@ -1,5 +1,6 @@
 package com.example.fasanol.outerspacemanager;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView username;
     private TextView score;
+    private TextView mineral;
+    private TextView gas;
     private Button vueGenerale;
     private Button batiment;
     private Button flotte;
@@ -31,35 +34,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button galaxie;
     private Button signOut;
 
+    private Retrofit ret = new Retrofit.Builder()
+            .baseUrl("https://outer-space-manager.herokuapp.com")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    private ProgressDialog mProgressDialog;
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        username = (TextView) findViewById(R.id.username);
-        score = (TextView) findViewById(R.id.score);
-
-        vueGenerale = (Button) findViewById(R.id.vg);
-        batiment = (Button) findViewById(R.id.ba);
-        flotte = (Button) findViewById(R.id.fl);
-        recherche = (Button) findViewById(R.id.re);
-        chantierSpatial = (Button) findViewById(R.id.cs);
-        galaxie = (Button) findViewById(R.id.ga);
-        signOut = (Button) findViewById(R.id.signOut);
-
-        batiment.setOnClickListener(this);
-        signOut.setOnClickListener(this);
-
-
-        this.settings = getSharedPreferences("apiSettings", 0);
-        this.token = settings.getString("token", "");
-
-        Retrofit ret = new Retrofit.Builder()
-                .baseUrl("https://outer-space-manager.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
+    protected void onResume() {
+        super.onResume();
         if(token != "" && token != null)
         {
             LoginInterface service = ret.create(LoginInterface.class);
@@ -68,7 +53,61 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onResponse(Call<UserConnected> call, Response<UserConnected> response) {
                     username.setText(response.body().getUsername());
-                    score.setText("Score: "+response.body().getPoints());
+                    score.setText(response.body().getPoints()+ " pts");
+                    gas.setText(response.body().getGas()+" Litres de gaz");
+                    mineral.setText(response.body().getMinerals()+ " Kg de mineraux");
+                }
+
+                @Override
+                public void onFailure(Call<UserConnected> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        username = (TextView) findViewById(R.id.username);
+        score = (TextView) findViewById(R.id.score);
+        gas = (TextView) findViewById(R.id.gas);
+        mineral = (TextView) findViewById(R.id.mineral);
+
+        batiment = (Button) findViewById(R.id.ba);
+        flotte = (Button) findViewById(R.id.fl);
+        recherche = (Button) findViewById(R.id.re);
+        chantierSpatial = (Button) findViewById(R.id.cs);
+        galaxie = (Button) findViewById(R.id.ga);
+        signOut = (Button) findViewById(R.id.signOut);
+
+        batiment.setOnClickListener(this);
+        chantierSpatial.setOnClickListener(this);
+        flotte.setOnClickListener(this);
+        recherche.setOnClickListener(this);
+        galaxie.setOnClickListener(this);
+        signOut.setOnClickListener(this);
+
+
+        this.settings = getSharedPreferences("apiSettings", 0);
+        this.token = settings.getString("token", "");
+
+        if(token != "" && token != null)
+        {
+            mProgressDialog = ProgressDialog.show(this, "",
+                    "Loading user datas", true);
+            LoginInterface service = ret.create(LoginInterface.class);
+            Call<UserConnected> request = service.getUser(token);
+            request.enqueue(new Callback<UserConnected>() {
+                @Override
+                public void onResponse(Call<UserConnected> call, Response<UserConnected> response) {
+                    username.setText(response.body().getUsername());
+                    score.setText(response.body().getPoints()+ " pts");
+                    gas.setText(response.body().getGas()+" Litres de gaz");
+                    mineral.setText(response.body().getMinerals()+ " Kg de mineraux");
+                    mProgressDialog.dismiss();
                 }
 
                 @Override
@@ -87,12 +126,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 SharedPreferences.Editor editor = settings.edit();
                 editor.remove("token");
                 editor.commit();
-
                 finish();
                 break;
+
             case R.id.ba:
-                Intent myIntent = new Intent(getApplicationContext(), batimentActivity.class);
-                startActivity(myIntent);
+                Intent ba = new Intent(getApplicationContext(), batimentActivity.class);
+                startActivity(ba);
+                break;
+
+            case R.id.cs:
+                Intent cs = new Intent(getApplicationContext(), ChantierActivity.class);
+                startActivity(cs);
+                break;
+
+            case R.id.ga:
+                Intent ga = new Intent(getApplicationContext(), GalaxyActivity.class);
+                startActivity(ga);
                 break;
         }
     }

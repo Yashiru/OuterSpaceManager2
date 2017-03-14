@@ -20,7 +20,8 @@
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".batimentActivity" />
-        <activity android:name=".batimentAddActivity"></activity>
+        <activity android:name=".ChantierActivity" />
+        <activity android:name=".GalaxyActivity"></activity>
     </application>
 
 </manifest>

@@ -11,6 +11,8 @@ public class Building {
     private String effect;
     private int gasCostByLevel;
     private int gasCostLevel0;
+
+
     private int level;
     private int mineralCostByLevel;
     private int mineralCostLevel0;
@@ -20,5 +22,31 @@ public class Building {
 
     public String getName(){
         return this.name;
+    }
+
+    public int getGasCost(){
+        return this.gasCostByLevel;
+    }
+
+    public int getMineralCost(){
+        return this.mineralCostByLevel;
+    }
+
+    public int getAmountOfEffectByLevel(){
+        return this.amountOfEffectByLevel;
+    }
+
+    public int getLevel() { return level; }
+
+    public int getGasCostToUp(){
+        return this.gasCostLevel0 + this.gasCostByLevel * this.level;
+    }
+
+    public int getMineralCostToUp(){
+        return this.mineralCostLevel0 + this.mineralCostByLevel * this.level;
+    }
+
+    public Boolean isBuilding(){
+        return this.building;
     }
 }

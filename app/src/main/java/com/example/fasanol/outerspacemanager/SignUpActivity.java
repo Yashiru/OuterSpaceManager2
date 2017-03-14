@@ -1,5 +1,6 @@
 package com.example.fasanol.outerspacemanager;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -28,6 +29,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
     private Button connectButton;
     private Button createButton;
     private SharedPreferences settings;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
 
         if(token != "" && token != null)
         {
+            mProgressDialog = ProgressDialog.show(this, "",
+                "Loggin in", true);
             Retrofit ret = new Retrofit.Builder()
                     .baseUrl("https://outer-space-manager.herokuapp.com")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -58,6 +62,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 @Override
                 public void onResponse(Call<UserConnected> call, Response<UserConnected> response) {
                     Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+                    mProgressDialog.dismiss();
                     startActivity(myIntent);
                 }
 

@@ -1,4 +1,6 @@
-package com.example.fasanol.outerspacemanager.models;
+package com.example.fasanol.outerspacemanager.models.HttpResponses;
+
+import com.example.fasanol.outerspacemanager.models.Building;
 
 import java.util.ArrayList;
 
@@ -22,6 +24,15 @@ public class BuildingResponse {
         }
 
         return names;
+    }
+
+    public ArrayList<String> getInfos(){
+        ArrayList<String> infos = new ArrayList<String>();
+        for (Building x : this.buildings){
+            infos.add("Gaz: "+x.getGasCost()+" L\nMinerals: "+x.getMineralCost()+"Kg\nEffect: "+x.getAmountOfEffectByLevel());
+        }
+
+        return infos;
     }
 }
 
