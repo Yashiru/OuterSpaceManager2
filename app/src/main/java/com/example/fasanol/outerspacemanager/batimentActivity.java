@@ -113,4 +113,8 @@ public class batimentActivity extends AppCompatActivity implements AdapterView.O
                 .show();
     }
 
+    /**
+     * Created by mac1 on 14/03/2017.
+     */
+
 }

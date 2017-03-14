@@ -1,31 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_chantier"
+    android:id="@+id/activity_attack"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.fasanol.outerspacemanager.ChantierActivity">
-
+    tools:context="com.example.fasanol.outerspacemanager.AttackActivity">
 
     <TextView
-        android:text="Construction de vaisseau"
+        android:text="username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/Title"
+        android:id="@+id/userName"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large" />
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/Title"
+        android:layout_height="@android:dimen/thumbnail_height"
+        android:layout_below="@+id/userName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="11dp"
-        android:id="@+id/shipList" />
+        android:layout_marginTop="17dp"
+        android:id="@+id/myFleet" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/usedShips"
+        android:layout_marginStart="22dp"
+        android:paddingTop="40dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="22dp" />
 </RelativeLayout>

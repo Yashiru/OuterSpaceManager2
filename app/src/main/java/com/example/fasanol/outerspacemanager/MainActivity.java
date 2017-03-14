@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button chantierSpatial;
     private Button galaxie;
     private Button signOut;
+    private Button attack;
 
     private Retrofit ret = new Retrofit.Builder()
             .baseUrl("https://outer-space-manager.herokuapp.com")
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chantierSpatial = (Button) findViewById(R.id.cs);
         galaxie = (Button) findViewById(R.id.ga);
         signOut = (Button) findViewById(R.id.signOut);
+        attack = (Button) findViewById(R.id.attack);
 
         batiment.setOnClickListener(this);
         chantierSpatial.setOnClickListener(this);
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recherche.setOnClickListener(this);
         galaxie.setOnClickListener(this);
         signOut.setOnClickListener(this);
+        attack.setOnClickListener(this);
 
 
         this.settings = getSharedPreferences("apiSettings", 0);
@@ -142,6 +145,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.ga:
                 Intent ga = new Intent(getApplicationContext(), GalaxyActivity.class);
                 startActivity(ga);
+                break;
+
+            case R.id.fl:
+                Intent fl = new Intent(getApplicationContext(), FleetActivity.class);
+                startActivity(fl);
+                break;
+
+            case R.id.re:
+                Intent re = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(re);
+                break;
+
+            case R.id.attack:
+            Intent at = new Intent(getApplicationContext(), AttackActivity.class);
+                startActivity(at);
                 break;
         }
     }

@@ -85,7 +85,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                     .baseUrl("https://outer-space-manager.herokuapp.com")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
-                Log.d("test", token);
                 SignUpInterface service = ret.create(SignUpInterface.class);
                 Call<User> request = service.connectUser(new User(this.identifiantText.getText(), this.passwordText.getText()));
                 request.enqueue(new Callback<User>() {
@@ -94,6 +93,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         if(response.code() == 200){
                             SharedPreferences.Editor editor = settings.edit();
                             editor.putString("token", response.body().getToken());
+                            Log.d("connexion", response.body().getToken().toString());
                             editor.commit();
                             Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(myIntent);
@@ -117,7 +117,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
 
-                Log.d("test", token);
                 SignUpInterface service2 = ret2.create(SignUpInterface.class);
                 Call<User> request2 = service2.creatUser(new User(this.identifiantText.getText(), this.passwordText.getText()));
                 request2.enqueue(new Callback<User>() {

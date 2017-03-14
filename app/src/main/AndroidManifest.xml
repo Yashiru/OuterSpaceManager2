@@ -21,7 +21,10 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".batimentActivity" />
         <activity android:name=".ChantierActivity" />
-        <activity android:name=".GalaxyActivity"></activity>
+        <activity android:name=".GalaxyActivity" />
+        <activity android:name=".FleetActivity" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".AttackActivity"></activity>
     </application>
 
 </manifest>

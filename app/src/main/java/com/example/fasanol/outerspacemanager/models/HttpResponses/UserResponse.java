@@ -20,4 +20,13 @@ public class UserResponse {
 
         return infos;
     }
+
+    public ArrayList<String> getUserNames(){
+        ArrayList<String> infos = new ArrayList<String>();
+        for (SimpleUser x : this.users){
+            infos.add(x.getUsername());
+        }
+
+        return infos;
+    }
 }

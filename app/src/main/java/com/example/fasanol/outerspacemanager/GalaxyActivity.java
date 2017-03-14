@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -22,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.fasanol.outerspacemanager.R.id.recyclerView;
 
-public class GalaxyActivity extends AppCompatActivity {
+public class GalaxyActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private Retrofit ret = new Retrofit.Builder()
             .baseUrl("https://outer-space-manager.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
@@ -32,6 +34,7 @@ public class GalaxyActivity extends AppCompatActivity {
     private ArrayList<User> users;
     private SharedPreferences settings;
     private String token;
+    private ArrayList<String> listUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,7 @@ public class GalaxyActivity extends AppCompatActivity {
         this.settings = getSharedPreferences("apiSettings", 0);
         this.token = settings.getString("token", "");
         this.listUser = (ListView) findViewById(R.id.listUser);
+        this.listUser.setOnItemClickListener(this);
 
         UserInterface service = ret.create(UserInterface.class);
         Call<UserResponse> request = service.getAllUsers(token);
@@ -56,6 +60,8 @@ public class GalaxyActivity extends AppCompatActivity {
                             android.R.layout.simple_list_item_1, response.body().getUsersInfos());
                     listUser.setAdapter(adapter);
 
+                    listUserName = response.body().getUserNames();
+
                 }
 
 
@@ -67,5 +73,10 @@ public class GalaxyActivity extends AppCompatActivity {
                 mProgressDialog.dismiss();
             }
         });
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }

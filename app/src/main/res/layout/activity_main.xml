@@ -130,4 +130,17 @@
         android:layout_toRightOf="@+id/signOut"
         android:layout_toEndOf="@+id/signOut" />
 
+    <Button
+        android:text="Attaquer un joueur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/attack"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_alignBottom="@+id/mineral"
+        android:foregroundGravity="center_vertical|center_horizontal|center|fill" />
+
 </RelativeLayout>
