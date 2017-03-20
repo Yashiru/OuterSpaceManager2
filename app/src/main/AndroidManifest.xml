@@ -3,6 +3,7 @@
     package="com.example.fasanol.outerspacemanager">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +25,11 @@
         <activity android:name=".GalaxyActivity" />
         <activity android:name=".FleetActivity" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".AttackActivity"></activity>
+        <activity android:name=".AttackActivity" />
+        <activity android:name=".AttackUserActivity" />
+        <activity android:name=".userDetailsActivity" />
+        <activity android:name=".AttackInProgressActivity" />
+        <activity android:name=".CustomAttackList"></activity>
     </application>
 
 </manifest>

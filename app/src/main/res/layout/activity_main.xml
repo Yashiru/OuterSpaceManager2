@@ -10,19 +10,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.fasanol.outerspacemanager.MainActivity">
 
-    <Button
-        android:text="Galaxie"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ga"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:textAlignment="center"
-        android:padding="13dp"
-        android:layout_marginBottom="33dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <TextView
         android:text="Score"
         android:layout_width="wrap_content"
@@ -34,17 +21,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/mineral"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
-        android:layout_marginTop="14dp"
-        android:layout_below="@+id/gas"
-        android:layout_alignLeft="@+id/gas"
-        android:layout_alignStart="@+id/gas" />
 
     <TextView
         android:text="Username"
@@ -64,58 +40,6 @@
         android:background="@android:drawable/ic_lock_power_off"
         android:layout_width="@dimen/off_icon"
         android:layout_above="@+id/gas"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Chantier spatial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/cs"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:textAlignment="center"
-        android:padding="13dp"
-        android:layout_marginBottom="32dp"
-        android:layout_above="@+id/ga"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Recherches"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/re"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:textAlignment="center"
-        android:padding="13dp"
-        android:layout_marginBottom="33dp"
-        android:layout_above="@+id/cs"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Flottes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/fl"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:textAlignment="center"
-        android:padding="13dp"
-        android:layout_marginBottom="33dp"
-        android:layout_above="@+id/re"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Bâtiments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ba"
-        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
-        android:textAlignment="center"
-        android:padding="13dp"
-        android:layout_marginBottom="31dp"
-        android:layout_above="@+id/fl"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -142,5 +66,94 @@
         android:layout_marginEnd="14dp"
         android:layout_alignBottom="@+id/mineral"
         android:foregroundGravity="center_vertical|center_horizontal|center|fill" />
+
+    <Button
+        android:text="Flottes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fl"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textAlignment="center"
+        android:padding="13dp"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@+id/re"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Bâtiments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ba"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textAlignment="center"
+        android:padding="13dp"
+        android:layout_marginBottom="16dp"
+        android:layout_above="@+id/fl"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Recherches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/re"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textAlignment="center"
+        android:padding="13dp"
+        android:layout_marginBottom="13dp"
+        android:layout_above="@+id/cs"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Chantier spatial"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cs"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textAlignment="center"
+        android:padding="13dp"
+        android:layout_marginBottom="15dp"
+        android:layout_above="@+id/attackInProgress"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Galaxie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ga"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textAlignment="center"
+        android:padding="13dp"
+        android:layout_marginBottom="26dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:text="Attaques en cours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/attackInProgress"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
+        android:textAlignment="center"
+        android:padding="13dp"
+        android:layout_marginBottom="12dp"
+        android:layout_above="@+id/ga"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mineral"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault"
+        android:layout_marginTop="14dp"
+        android:layout_below="@+id/gas"
+        android:layout_alignLeft="@+id/gas"
+        android:layout_alignStart="@+id/gas" />
 
 </RelativeLayout>

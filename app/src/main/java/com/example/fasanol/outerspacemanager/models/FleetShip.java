@@ -1,12 +1,13 @@
 package com.example.fasanol.outerspacemanager.models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by mac1 on 14/03/2017.
  */
 
-public class FleetShip {
+public class FleetShip implements Serializable{
     public void setAmount(int amount) {
         this.amount = amount;
     }
@@ -115,4 +116,5 @@ public class FleetShip {
     public int getSpeed() {
         return speed;
     }
+
 }

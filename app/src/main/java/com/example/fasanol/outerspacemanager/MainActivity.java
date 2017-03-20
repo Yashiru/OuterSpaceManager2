@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         flotte = (Button) findViewById(R.id.fl);
         recherche = (Button) findViewById(R.id.re);
         chantierSpatial = (Button) findViewById(R.id.cs);
-        galaxie = (Button) findViewById(R.id.ga);
+        galaxie = (Button) findViewById(R.id.attackInProgress);
         signOut = (Button) findViewById(R.id.signOut);
         attack = (Button) findViewById(R.id.attack);
 
@@ -158,8 +158,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.attack:
-            Intent at = new Intent(getApplicationContext(), AttackActivity.class);
+                Intent at = new Intent(getApplicationContext(), AttackActivity.class);
                 startActivity(at);
+                break;
+
+            case R.id.attackInProgress:
+                Intent ac = new Intent(getApplicationContext(), AttackInProgressActivity.class);
+                startActivity(ac);
                 break;
         }
     }

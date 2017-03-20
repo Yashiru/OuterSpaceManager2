@@ -1,6 +1,7 @@
 package com.example.fasanol.outerspacemanager;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,11 +9,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.fasanol.outerspacemanager.interfaces.ShipInterface;
+import com.example.fasanol.outerspacemanager.interfaces.UserInterface;
 import com.example.fasanol.outerspacemanager.models.FleetShip;
+import com.example.fasanol.outerspacemanager.models.HttpResponses.UserResponse;
 import com.example.fasanol.outerspacemanager.models.HttpResponses.fleetResponse;
 import com.example.fasanol.outerspacemanager.models.Ship;
 
@@ -26,18 +31,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AttackActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     private ListView myFleet;
-    private TextView usedShips;
-    private ArrayList<Ship> ships;
+    private ArrayList<String> userNames;
     private Retrofit ret = new Retrofit.Builder()
             .baseUrl("https://outer-space-manager.herokuapp.com")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
-    private ProgressDialog mProgressDialog;
-    private SharedPreferences settings;
-    private String token;
     private ArrayList<FleetShip> fleet;
     private ArrayList<FleetShip> selectedFleet = new ArrayList<FleetShip>();
     private ArrayList<String> fleetInfos;
+    private String token;
+    private SharedPreferences settings;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,39 +49,31 @@ public class AttackActivity extends AppCompatActivity implements AdapterView.OnI
         setContentView(R.layout.activity_attack);
         mProgressDialog = ProgressDialog.show(this, "",
                 "Loading fleet", true);
-
         this.settings = getSharedPreferences("apiSettings", 0);
         this.token = settings.getString("token", "");
 
         this.myFleet = (ListView) findViewById(R.id.myFleet);
-        this.usedShips = (TextView) findViewById(R.id.usedShips);
         this.myFleet.setOnItemClickListener(this);
 
-        ShipInterface service = ret.create(ShipInterface.class);
-        Call<fleetResponse> request = service.getFleetList(token);
-        request.enqueue(new Callback<fleetResponse>() {
+        UserInterface service = ret.create(UserInterface.class);
+        Call<UserResponse> request = service.getAllUsers(token);
+        request.enqueue(new Callback<UserResponse>() {
             @Override
-            public void onResponse(Call<fleetResponse> call, Response<fleetResponse> response) {
+            public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
                 mProgressDialog.dismiss();
                 if(response.isSuccessful())
                 {
-                    fleetInfos = response.body().getFleetInfos();
                     ArrayAdapter<String> adapter = new ArrayAdapter<String>(AttackActivity.this,
-                            android.R.layout.simple_list_item_1, response.body().getFleetInfos());
+                            android.R.layout.simple_list_item_1, response.body().getUsersInfos());
                     myFleet.setAdapter(adapter);
-                    fleet = response.body().getShips();
-                    for (FleetShip x : fleet){
-                        selectedFleet.add(x);
-                    }
-                    for (FleetShip y : selectedFleet){
-                        y.setAmount(0);
-                    }
+
+                    userNames = response.body().getUserNames();
                 }
 
             }
 
             @Override
-            public void onFailure(Call<fleetResponse> call, Throwable t) {
+            public void onFailure(Call<UserResponse> call, Throwable t) {
 
             }
         });
@@ -85,18 +81,11 @@ public class AttackActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String text = "";
-        Log.d("fleet", ""+fleet.get(position).getAmount());
-        Log.d("selectedfleet", ""+selectedFleet.get(position).getAmount());
-        if(fleet.get(position).getAmount() > selectedFleet.get(position).getAmount())
-        {
-            selectedFleet.get(position).setAmount(selectedFleet.get(position).getAmount() + 1);
-        }
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("selectedUserToAttack", userNames.get(position));
+        editor.commit();
 
-        for (FleetShip x : this.selectedFleet){
-            text += x.getAmount() + " " +x.getName()+"\n";
-        }
-
-        usedShips.setText(text);
+        Intent myIntent = new Intent(getApplicationContext(), AttackUserActivity.class);
+        startActivity(myIntent);
     }
 }

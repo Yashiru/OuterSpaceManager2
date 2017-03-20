@@ -1,6 +1,7 @@
 package com.example.fasanol.outerspacemanager;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -77,6 +78,11 @@ public class GalaxyActivity extends AppCompatActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString("selectedUserToViewReports", listUserName.get(position));
+        editor.commit();
 
+        Intent myIntent = new Intent(getApplicationContext(), userDetailsActivity.class);
+        startActivity(myIntent);
     }
 }

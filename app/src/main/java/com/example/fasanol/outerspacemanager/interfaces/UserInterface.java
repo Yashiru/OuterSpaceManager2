@@ -1,11 +1,10 @@
 package com.example.fasanol.outerspacemanager.interfaces;
 
+import com.example.fasanol.outerspacemanager.models.HttpResponses.AttackResponse;
 import com.example.fasanol.outerspacemanager.models.HttpResponses.BuildingResponse;
-import com.example.fasanol.outerspacemanager.models.HttpResponses.MinimalShip;
+import com.example.fasanol.outerspacemanager.models.ShipListToAttack;
 import com.example.fasanol.outerspacemanager.models.HttpResponses.UserResponse;
 import com.example.fasanol.outerspacemanager.models.HttpResponses.httpSimpleResponse;
-
-import java.util.ArrayList;
 
 import retrofit2.http.Body;
 import retrofit2.http.Header;
@@ -29,7 +28,9 @@ public interface UserInterface {
     @GET("api/v1/users/0/11")
     Call<UserResponse> getAllUsers(@Header("x-access-token") String token);
 
-    @POST("api/fleet/attack/{userName}")
-    Call<httpSimpleResponse> attackUser(@Header("x-access-token") String token, @Path("userName") String username, @Body ArrayList<MinimalShip> ships);
+    @POST("api/v1/fleet/attack/{userName}")
+    Call<AttackResponse> attackUser(@Header("x-access-token") String token, @Path("userName") String username, @Body ShipListToAttack ships);
+
+
 
 }
