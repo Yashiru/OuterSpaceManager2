@@ -25,7 +25,7 @@ public interface UserInterface {
     @POST("api/v1/buildings/create/{buildingId}")
     Call<httpSimpleResponse> createBuilding(@Header("x-access-token") String token, @Path("buildingId") int buildingId);
 
-    @GET("api/v1/users/0/11")
+    @GET("api/v1/users/0/20")
     Call<UserResponse> getAllUsers(@Header("x-access-token") String token);
 
     @POST("api/v1/fleet/attack/{userName}")

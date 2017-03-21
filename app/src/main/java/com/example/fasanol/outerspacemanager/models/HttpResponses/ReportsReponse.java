@@ -3,6 +3,7 @@ package com.example.fasanol.outerspacemanager.models.HttpResponses;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.example.fasanol.outerspacemanager.models.MinimalShip;
 import com.example.fasanol.outerspacemanager.models.Report;
 import com.example.fasanol.outerspacemanager.models.RowAttackList;
 
@@ -20,7 +21,7 @@ public class ReportsReponse {
     public ArrayList<Report> getReportByUsername(String username){
         ArrayList<Report> res = new ArrayList<Report>();
         for(Report report : this.reports){
-            if(report.getTo() == username){
+            if(report.getTo().equals(username)){
                 res.add(report);
             }
         }
@@ -29,11 +30,17 @@ public class ReportsReponse {
 
     public ArrayList<String> getReportsInfos(ArrayList<Report> reports){
         ArrayList<String> res = new ArrayList<String>();
-        for(Report report : this.reports){
+        for(Report report : reports){
             long timestamp = report.getDate();
             DateTime date = new DateTime(timestamp);
 
-            res.add(date.dayOfMonth().getAsText() + " / "+date.monthOfYear().getAsText()+" à "+date.hourOfDay().getAsText()+":"+date.minuteOfHour().getAsText()+":"+date.secondOfMinute().getAsText() );
+            String info = " le " + date.dayOfMonth().getAsText() + " / "+date.monthOfYear().getAsText()+" à "+date.hourOfDay().getAsText()+":"+date.minuteOfHour().getAsText()+":"+date.secondOfMinute().getAsText() + "\n\n" +
+                    "Gas: " + report.getGasWon() + "\n"+
+                    "Minerals: " + report.getMineralsWon() + "\n\n" +
+                    "Perte :\n"+report.getLosts();
+
+
+            res.add(info);
         }
         return res;
     }
@@ -46,5 +53,19 @@ public class ReportsReponse {
         }
 
         return retour;
+    }
+
+    public String getUsernameByAttack(long timestamp){
+        String username = "";
+
+        for(Report r : this.reports){
+            if(r.getDate() == timestamp)
+            {
+                username = r.getTo();
+                break;
+            }
+        }
+
+        return username;
     }
 }

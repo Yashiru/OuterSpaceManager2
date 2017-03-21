@@ -4,12 +4,15 @@ import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.fasanol.outerspacemanager.interfaces.ReportInterface;
 import com.example.fasanol.outerspacemanager.interfaces.UserInterface;
+import com.example.fasanol.outerspacemanager.models.AttackInProgressAdapter;
 import com.example.fasanol.outerspacemanager.models.FleetShip;
 import com.example.fasanol.outerspacemanager.models.HttpResponses.ReportsReponse;
 import com.example.fasanol.outerspacemanager.models.HttpResponses.UserResponse;
@@ -25,7 +28,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class AttackInProgressActivity extends AppCompatActivity {
-    private ListView myAttacks;
+    private RecyclerView myAttacks;
 
     private Retrofit ret = new Retrofit.Builder()
             .baseUrl("https://outer-space-manager.herokuapp.com")
@@ -45,18 +48,17 @@ public class AttackInProgressActivity extends AppCompatActivity {
         this.settings = getSharedPreferences("apiSettings", 0);
         this.token = settings.getString("token", "");
 
-        this.myAttacks = (ListView) findViewById(R.id.attackList);
+        this.myAttacks = (RecyclerView) findViewById(R.id.attackList);
+        myAttacks.setLayoutManager(new LinearLayoutManager(AttackInProgressActivity.this));
 
 
         RowAttackListDataSource dataSource = new RowAttackListDataSource(getApplicationContext());
         dataSource.open();
 
-        ArrayList<RowAttackList> list = dataSource.getAllAttacks();
+        AttackInProgressAdapter adapter = new AttackInProgressAdapter(dataSource.getAllAttacks(), AttackInProgressActivity.this); // passe pas dans le onBindView
 
-        ArrayAdapter<RowAttackList> adapter = new ArrayAdapter<RowAttackList>(AttackInProgressActivity.this,
-                android.R.layout.simple_list_item_1, list);
         myAttacks.setAdapter(adapter);
 
-        dataSource.close();
+        mProgressDialog.dismiss();
     }
 }

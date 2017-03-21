@@ -17,7 +17,8 @@ public class ApplicationDB extends SQLiteOpenHelper {
     public static final String KEY_INITTIMESTAMP = "timeStamp";
     public static final String KEY_ENDTIMESTAMP = "endtimeStamp";
     public static final String KEY_JSONFLEET = "jsonFleet";
-    private static final String ATTACK_TABLE_CREATE = "CREATE TABLE " + ATTACK_TABLE_NAME + " (" + KEY_JSONFLEET + " TEXT, " + KEY_ENDTIMESTAMP + " LONG, " + KEY_INITTIMESTAMP + " LONG);";
+    public static final String KEY_ATTACKEDUSER = "attackedUser";
+    private static final String ATTACK_TABLE_CREATE = "CREATE TABLE " + ATTACK_TABLE_NAME + " (" + KEY_JSONFLEET + " TEXT, " + KEY_ENDTIMESTAMP + " LONG, " + KEY_INITTIMESTAMP + " LONG, " + KEY_ATTACKEDUSER + " TEXT);";
 
 
     public ApplicationDB(Context context) {
@@ -31,7 +32,7 @@ public class ApplicationDB extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + ATTACK_TABLE_CREATE);
+        db.execSQL("DROP TABLE IF EXISTS " + ATTACK_TABLE_NAME);
         onCreate(db);
     }
 }

@@ -14,4 +14,8 @@ public class ShipListToAttack {
     public ShipListToAttack(ArrayList<MinimalShip> ships) {
         this.ships = ships;
     }
+
+    public ArrayList<MinimalShip> getShips() {
+        return ships;
+    }
 }

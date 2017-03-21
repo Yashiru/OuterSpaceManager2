@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 public class FleetAfterBattle {
     private int capacity;
-    private ArrayList<FleetShip> fleet;
     private int survivingShips;
+    private ArrayList<FleetShip> fleet;
+
+    public ArrayList<FleetShip> getFleet() {
+        return fleet;
+    }
 }

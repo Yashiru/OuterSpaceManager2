@@ -1,5 +1,7 @@
 package com.example.fasanol.outerspacemanager.models;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.ArrayList;
 
 /**
@@ -19,24 +21,12 @@ public class Report {
     private String to;
     private String type;
 
-    public ArrayList<SelectedShips> getAttackerFleet() {
-        return attackerFleet;
-    }
-
     public long getDate() {
         return date;
     }
 
     public long getDateInv() {
         return dateInv;
-    }
-
-    public ArrayList<FleetShip> getDefenderFleet() {
-        return defenderFleet;
-    }
-
-    public FleetAfterBattle getDefenderFleetAfterBattle() {
-        return defenderFleetAfterBattle;
     }
 
     public String getFrom() {
@@ -59,4 +49,31 @@ public class Report {
         return type;
     }
 
+    public ArrayList<SelectedShips> getAttackerFleet() {
+        return attackerFleet;
+    }
+
+    public FleetAfterBattle getAttackerFleetAfterBattle() {
+        return attackerFleetAfterBattle;
+    }
+
+    public ArrayList<FleetShip> getDefenderFleet() {
+        return defenderFleet;
+    }
+
+    public FleetAfterBattle getDefenderFleetAfterBattle() {
+        return defenderFleetAfterBattle;
+    }
+
+    public String getLosts(){
+        String losts = "";
+        shipFactory fac = new shipFactory();
+
+        for(int i=0; i < this.getAttackerFleet().size(); i++){
+            int lost = this.getAttackerFleet().get(i).getAmount() - this.getAttackerFleetAfterBattle().getFleet().get(i).getAmount();
+            losts += "\t\t"+lost+"/"+this.getAttackerFleet().get(i).getAmount()+" "+fac.shipsNames[this.getAttackerFleet().get(i).getShipId()] + " détruit(s)\n";
+        }
+
+        return losts;
+    }
 }

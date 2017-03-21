@@ -21,4 +21,12 @@ public class MinimalShip {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    public int getShipId() {
+        return shipId;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
 }

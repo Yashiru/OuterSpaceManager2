@@ -123,7 +123,7 @@
         android:text="Galaxie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ga"
+        android:id="@+id/galaxy"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Large"
         android:textAlignment="center"
         android:padding="13dp"
@@ -141,7 +141,7 @@
         android:textAlignment="center"
         android:padding="13dp"
         android:layout_marginBottom="12dp"
-        android:layout_above="@+id/ga"
+        android:layout_above="@+id/galaxy"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 

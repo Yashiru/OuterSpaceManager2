@@ -203,9 +203,9 @@ public class AttackUserActivity extends AppCompatActivity implements AdapterView
                         dataSource.open();
 
                         Gson json = new Gson();
-                        Long timestampnow = System.currentTimeMillis();
+                        long timestampnow = System.currentTimeMillis();
 
-                        dataSource.createAttack(json.toJson(shipsList), timestamp, timestampnow);
+                        dataSource.createAttack(json.toJson(shipsList), timestampnow, timestamp, userNameToAttack);
 
                         dataSource.close();
 

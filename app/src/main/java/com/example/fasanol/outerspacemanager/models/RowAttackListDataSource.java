@@ -16,7 +16,7 @@ import java.util.UUID;
 public class RowAttackListDataSource {
     private SQLiteDatabase database;
     private ApplicationDB dbHelper;
-    private String[] allColumns = { ApplicationDB.KEY_INITTIMESTAMP, ApplicationDB.KEY_JSONFLEET, ApplicationDB.KEY_ENDTIMESTAMP };
+    private String[] allColumns = {  ApplicationDB.KEY_JSONFLEET, ApplicationDB.KEY_INITTIMESTAMP, ApplicationDB.KEY_ENDTIMESTAMP, ApplicationDB.KEY_ATTACKEDUSER };
 
     public RowAttackListDataSource(Context context) {
         dbHelper = new ApplicationDB(context);
@@ -28,11 +28,12 @@ public class RowAttackListDataSource {
         dbHelper.close();
     }
 
-    public RowAttackList createAttack(String jsonFleet,long initialTimeStamp, long endTimestamp) {
+    public RowAttackList createAttack(String jsonFleet,long initialTimeStamp, long endTimestamp, String attackedUser) {
         ContentValues values = new ContentValues();
         values.put(ApplicationDB.KEY_JSONFLEET, jsonFleet);
         values.put(ApplicationDB.KEY_INITTIMESTAMP, initialTimeStamp);
         values.put(ApplicationDB.KEY_ENDTIMESTAMP, endTimestamp);
+        values.put(ApplicationDB.KEY_ATTACKEDUSER, attackedUser);
         database.insert(ApplicationDB.ATTACK_TABLE_NAME, null,
                 values);
         Cursor cursor = database.query(ApplicationDB.ATTACK_TABLE_NAME,
@@ -56,7 +57,10 @@ public class RowAttackListDataSource {
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
             RowAttackList row = cursorToRowAttackList(cursor);
-            retour.add(row);
+            if(row.getProgress() < 100)
+            {
+                retour.add(row);
+            }
             cursor.moveToNext();
         }
         cursor.close();
@@ -65,8 +69,10 @@ public class RowAttackListDataSource {
 
     private RowAttackList cursorToRowAttackList(Cursor cursor) {
         RowAttackList row = new RowAttackList();
-        row.setInitialTimeStamp(cursor.getInt(0));
-        row.setJsonFleet(cursor.getString(1));
+        row.setJsonFleet(cursor.getString(0));
+        row.setInitialTimeStamp(cursor.getLong(1));
+        row.setEndTimeStamp(cursor.getLong(2));
+        row.setUser(cursor.getString(3));
         return row;
     }
 

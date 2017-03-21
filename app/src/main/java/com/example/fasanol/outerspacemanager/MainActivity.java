@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button recherche;
     private Button chantierSpatial;
     private Button galaxie;
+    private Button attackInProgress;
     private Button signOut;
     private Button attack;
 
@@ -81,9 +82,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         flotte = (Button) findViewById(R.id.fl);
         recherche = (Button) findViewById(R.id.re);
         chantierSpatial = (Button) findViewById(R.id.cs);
-        galaxie = (Button) findViewById(R.id.attackInProgress);
+        attackInProgress = (Button) findViewById(R.id.attackInProgress);
         signOut = (Button) findViewById(R.id.signOut);
         attack = (Button) findViewById(R.id.attack);
+        galaxie = (Button) findViewById(R.id.galaxy);
 
         batiment.setOnClickListener(this);
         chantierSpatial.setOnClickListener(this);
@@ -92,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         galaxie.setOnClickListener(this);
         signOut.setOnClickListener(this);
         attack.setOnClickListener(this);
+        attackInProgress.setOnClickListener(this);
+        galaxie.setOnClickListener(this);
 
 
         this.settings = getSharedPreferences("apiSettings", 0);
@@ -142,11 +146,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(cs);
                 break;
 
-            case R.id.ga:
-                Intent ga = new Intent(getApplicationContext(), GalaxyActivity.class);
-                startActivity(ga);
-                break;
-
             case R.id.fl:
                 Intent fl = new Intent(getApplicationContext(), FleetActivity.class);
                 startActivity(fl);
@@ -165,6 +164,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.attackInProgress:
                 Intent ac = new Intent(getApplicationContext(), AttackInProgressActivity.class);
                 startActivity(ac);
+                break;
+
+            case R.id.galaxy:
+                Intent ga = new Intent(getApplicationContext(), GalaxyActivity.class);
+                startActivity(ga);
                 break;
         }
     }

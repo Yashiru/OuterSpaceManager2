@@ -51,7 +51,7 @@ public class userDetailsActivity extends AppCompatActivity {
         this.title = (TextView) findViewById(R.id.title);
         this.reportsView = (ListView) findViewById(R.id.reports);
 
-        this.title.setText("Rapports de "+this.userNameSelected);
+        this.title.setText("Rapports des batailles chez "+this.userNameSelected);
 
         ReportInterface service = ret.create(ReportInterface.class);
         Call<ReportsReponse> request = service.getReports(token, 0, 15);
