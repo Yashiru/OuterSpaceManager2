@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.fasanol.outerspacemanager.GalaxyFragment"
+    android:orientation="horizontal">
+
+    <fragment
+        android:id="@+id/GalaxyActivity"
+        android:name="com.example.fasanol.outerspacemanager.GalaxyActivity"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        android:layout_weight="2"
+        tools:layout_editor_absoluteX="158dp"
+        tools:layout_editor_absoluteY="8dp" />
+
+    <fragment
+        android:id="@+id/userDetailsActivity"
+        android:name="com.example.fasanol.outerspacemanager.userDetailsActivity"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_weight="5"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp" />
+
+</LinearLayout>
