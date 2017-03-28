@@ -1,6 +1,7 @@
 package com.example.fasanol.outerspacemanager;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.fasanol.outerspacemanager.interfaces.LoginInterface;
 import com.example.fasanol.outerspacemanager.interfaces.SignUpInterface;
@@ -50,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         if(token != "" && token != null)
         {
             mProgressDialog = ProgressDialog.show(this, "",
-                "Loggin in", true);
+                "Connexion...", true);
             Retrofit ret = new Retrofit.Builder()
                     .baseUrl("https://outer-space-manager.herokuapp.com")
                     .addConverterFactory(GsonConverterFactory.create())
@@ -112,37 +114,64 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
                 break;
 
             case R.id.createUser:
-                Retrofit ret2 = new Retrofit.Builder()
-                        .baseUrl("https://outer-space-manager.herokuapp.com")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build();
+                if(identifiantText.getText().toString().length() > 0 && passwordText.getText().toString().length() > 0) {
+                    Retrofit ret2 = new Retrofit.Builder()
+                            .baseUrl("https://outer-space-manager.herokuapp.com")
+                            .addConverterFactory(GsonConverterFactory.create())
+                            .build();
 
-                SignUpInterface service2 = ret2.create(SignUpInterface.class);
-                Call<User> request2 = service2.creatUser(new User(this.identifiantText.getText(), this.passwordText.getText()));
-                request2.enqueue(new Callback<User>() {
-                    @Override
-                    public void onResponse(Call<User> call, Response<User> response) {
-                        if(response.code() == 200){
-                            SharedPreferences.Editor editor = settings.edit();
-                            editor.putString("token", response.body().getToken());
-                            editor.commit();
-                            Log.d("Token", response.body().getToken());
-                            Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(myIntent);
+                    SignUpInterface service2 = ret2.create(SignUpInterface.class);
+                    Call<User> request2 = service2.creatUser(new User(this.identifiantText.getText(), this.passwordText.getText()));
+                    request2.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            if(response.code() == 200){
+                                SharedPreferences.Editor editor = settings.edit();
+                                editor.putString("token", response.body().getToken());
+                                editor.commit();
+                                Log.d("Token", response.body().getToken());
+                                Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivity(myIntent);
+                            }
+                            else{
+                                mProgressDialog.dismiss();
+                                Context context = getApplicationContext();
+                                CharSequence text = "L'utilisateur "+identifiantText.getText().toString()+" existe déja.";
+                                int duration = Toast.LENGTH_SHORT;
+
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+
+                            }
                         }
-                        else{
-                            Log.d("Error", "User deja exitant");
 
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            mProgressDialog.dismiss();
+                            Context context = getApplicationContext();
+                            CharSequence text = "Impossible de créer l'utilisateur !";
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
                         }
-                    }
+                    });
+                }
+                else{
+                    Context context = getApplicationContext();
+                    CharSequence text = "Veuillez remplire les champs pour vous inscrire.";
+                    int duration = Toast.LENGTH_SHORT;
 
-                    @Override
-                    public void onFailure(Call<User> call, Throwable t) {
-
-                    }
-                });
-
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.mProgressDialog.dismiss();
     }
 }
