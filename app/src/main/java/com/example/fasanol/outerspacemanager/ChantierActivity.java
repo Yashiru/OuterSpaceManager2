@@ -2,13 +2,18 @@ package com.example.fasanol.outerspacemanager;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -37,14 +42,15 @@ public class ChantierActivity extends AppCompatActivity implements AdapterView.O
     private String token;
     private ListView shipList;
     private ArrayList<String> shipsNames;
-
+    private Boolean add = true;
+    private int shipNumber = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chantier);
         mProgressDialog = ProgressDialog.show(this, "",
-                "Loading ship list", true);
+                "Chargement des vaiseaux...", true);
         this.settings = getSharedPreferences("apiSettings", 0);
         this.token = settings.getString("token", "");
         this.shipList = (ListView) findViewById(R.id.shipList);
@@ -80,28 +86,58 @@ public class ChantierActivity extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        ShipInterface service = ret.create(ShipInterface.class);
-        Call<httpSimpleResponse> request = service.createShip(token, position, new shipQueryObject(1));
-        request.enqueue(new Callback<httpSimpleResponse>() {
-            @Override
-            public void onResponse(Call<httpSimpleResponse> call, Response<httpSimpleResponse> response) {
-                if(response.isSuccessful())
-                {
-                    Context context = getApplicationContext();
-                    CharSequence text = shipsNames.get(position)+" prèt au combat";
-                    int duration = Toast.LENGTH_SHORT;
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Nombre de " + this.shipsNames.get(position));
+        final EditText input = new EditText(this);
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setRawInputType(Configuration.KEYBOARD_12KEY);
+        alert.setView(input);
+        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                shipNumber = Integer.parseInt(input.getText().toString());
 
-                    Toast toast = Toast.makeText(context, text, duration);
-                    toast.show();
-                }
+                ShipInterface service = ret.create(ShipInterface.class);
+                Call<httpSimpleResponse> request = service.createShip(token, position, new shipQueryObject(shipNumber));
+                request.enqueue(new Callback<httpSimpleResponse>() {
+                    @Override
+                    public void onResponse(Call<httpSimpleResponse> call, Response<httpSimpleResponse> response) {
+                        if(response.isSuccessful())
+                        {
+                            Context context = getApplicationContext();
+                            CharSequence text = shipNumber+" "+shipsNames.get(position)+"(s) en construction.";
+                            int duration = Toast.LENGTH_SHORT;
+
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                        }
 
 
-            }
+                    }
 
-            @Override
-            public void onFailure(Call<httpSimpleResponse> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<httpSimpleResponse> call, Throwable t) {
+                        Context context = getApplicationContext();
+                        CharSequence text = "Impossible de construire "+shipNumber+" "+shipsNames.get(position)+" !";
+                        int duration = Toast.LENGTH_SHORT;
 
+                        Toast toast = Toast.makeText(context, text, duration);
+                        toast.show();
+                    }
+                });
             }
         });
+        alert.setNegativeButton("Annuler", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                add = false;
+            }
+        });
+        alert.show();
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        this.mProgressDialog.dismiss();
     }
 }
